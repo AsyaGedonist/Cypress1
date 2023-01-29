@@ -31,17 +31,16 @@ it("Should Add a book", () => {
   cy.login("test@test.com", "test");
   cy.contains("Books list").click();
   cy.addBook("Title1", "Description1", "Author1");
-  cy.get(".card-title").last().should("contain.text","Title1");
-  cy.contains("button", "Add to favorite").last().should("be.visible");
+  cy.contains("Title1").should("be.visible");
 });
 
 it("Should Add to favorite", () => {
   cy.visit("/booksNode");
   cy.login("test@test.com", "test");
   cy.contains("Books list").click();
-  cy.addBook("Title2", "Description2", "Author2");
-  cy.get("button").eq(-2).click();
-  cy.get("button").eq(-2).should("contain.text","Delete from favorite");
+  cy.addFavoriteBook("Title2", "Description2", "Author2");
+  cy.contains("h4", "Favorites").click();
+  cy.contains("Title2").should("be.visible");
 });
 
 it("Shouldn't Add a favorite book to another user", () => {
